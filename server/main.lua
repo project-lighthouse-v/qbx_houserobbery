@@ -209,11 +209,13 @@ local function shuffleTables(index)
 end
 
 -- Alert police to house robbery in progress
+---@param playerSource number Player server ID
 ---@param text string Text to send
 ---@param interiorId number Interior index number to fetch timeout from config
-local function policeAlert(text, interiorId)
+---@param coords vector3 Robbery location outside the house
+local function policeAlert(playerSource, text, interiorId, coords)
     SetTimeout(sharedConfig.interiors[interiorId].callCopsTimeout, function()
-        TriggerEvent('police:server:policeAlert', text)
+        TriggerEvent('qbx_houserobbery:server:dispatchAlert', playerSource, text, coords)
     end)
 end
 
@@ -251,7 +253,7 @@ AddEventHandler('lockpicks:UseLockpick', function(playerSource, isAdvanced)
         exports.qbx_core:Notify(playerSource, locale('notify.success_skillcheck'), 'success')
         TriggerClientEvent('qbx_houserobbery:client:syncconfig', -1, sharedConfig.houses[closestHouseIndex], closestHouseIndex)
         enterHouse(playerSource, sharedConfig.interiors[house.interior].exit, house.routingbucket, closestHouseIndex)
-        policeAlert(locale('notify.police_alert'), house.interior)
+        policeAlert(playerSource, locale('notify.police_alert'), house.interior, playerCoords)
     else
         exports.qbx_core:Notify(playerSource, locale('notify.fail_skillcheck'), 'error')
     end

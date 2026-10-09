@@ -13,10 +13,13 @@ shared_scripts {
 }
 
 server_scripts {
+    'server/default_alert.lua',
+    'server/alerts.lua',
     'server/main.lua',
 }
 
 client_scripts {
+    'client/alerts.lua',
     'client/main.lua'
 }
 

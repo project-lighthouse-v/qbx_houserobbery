@@ -1,4 +1,7 @@
 return {
+    useExternalDispatch = true,
+    dispatch = 'ps-dispatch',
+
     minimumPolice = 2,
     notEnoughCopsNotify = true,
     requiredItems = {'advancedlockpick', 'screwdriverset'},
